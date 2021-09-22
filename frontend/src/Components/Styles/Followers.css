@@ -1,0 +1,7 @@
+.panel {
+  margin-top: 15px;
+  height: 500px;
+  width: 35vw;
+  border: 1px solid #b0a6b5;
+  position: fixed;
+}

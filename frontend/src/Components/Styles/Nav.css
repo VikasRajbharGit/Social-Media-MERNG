@@ -1,0 +1,9 @@
+.nav {
+  width: 100vw;
+  background-color: white;
+  border: 1px solid #b0a6b5;
+  position: fixed;
+  bottom: 0;
+  display: flex;
+  justify-content: space-evenly;
+}

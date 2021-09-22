@@ -1,0 +1,16 @@
+.center {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+.home {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-bottom: 70px;
+}
+.side-panel {
+  width: 35vw;
+  height: 600px;
+  position: relative;
+}
