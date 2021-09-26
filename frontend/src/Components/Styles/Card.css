@@ -9,6 +9,7 @@
 
 .image {
   width: 100%;
+  object-fit: contain;
 }
 .caption {
   padding: 10px;

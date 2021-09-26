@@ -4,9 +4,16 @@ import "./index.css";
 import App from "./App";
 import ApolloProvider from "./ApolloProvider";
 import reportWebVitals from "./reportWebVitals";
+import { Provider } from "react-redux";
+
+import store from "./store/index";
 
 ReactDOM.render(
-  <React.StrictMode>{ApolloProvider}</React.StrictMode>,
+  <React.StrictMode>
+    <Provider store={store}>
+      <ApolloProvider />
+    </Provider>
+  </React.StrictMode>,
   document.getElementById("root")
 );
 

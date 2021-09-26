@@ -56,9 +56,9 @@ async function startApolloServer(typeDefs, resolvers) {
           };
         },
       },
-      ApolloServerPluginLandingPageGraphQLPlayground({
-        // options
-      }),
+      // ApolloServerPluginLandingPageGraphQLPlayground({
+      //   // options
+      // }),
       ApolloServerPluginDrainHttpServer({ httpServer }),
     ],
     context: ({ req }) => ({ req }),
