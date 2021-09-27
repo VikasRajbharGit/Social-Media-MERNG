@@ -61,7 +61,7 @@ const token = localStorage.getItem("token");
 const expiration = localStorage.getItem("expiration");
 const initialSate = {
   isAuthenticated: token ? true : false,
-  token: token ? token : "NA",
+
   session: expiration ? new Date(parseInt(expiration)) : new Date(),
   messages: {},
 };
@@ -115,7 +115,6 @@ const authSlice = createSlice({
         localStorage.setItem("token", action.payload.data.login.token);
         localStorage.setItem("expiration", exp + 3600000);
 
-        state.token = action.payload.data.login.token;
         state.session = new Date(exp + 3600000);
         state.isAuthenticated = true;
         state.messages = {};
@@ -132,7 +131,6 @@ const authSlice = createSlice({
         localStorage.setItem("token", action.payload.data.register.token);
         localStorage.setItem("expiration", exp + 3600000);
 
-        state.token = action.payload.data.register.token;
         state.session = new Date(exp + 3600000);
         state.isAuthenticated = true;
         state.messages = {};

@@ -1,7 +1,15 @@
 import React from "react";
 import "./Styles/Card.css";
+import gql from "graphql-tag";
+import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+
+import { postThunk } from "../store/post";
 
 function Card(props) {
+  const dispatch = useDispatch();
+  const [likes, setLikes] = useState(props.post.likeCount);
+  // const likes = props.post.likeCount;
   return (
     <div className="card">
       <img
@@ -10,6 +18,25 @@ function Card(props) {
       />
 
       <div className="caption">
+        <div
+          onClick={() => {
+            dispatch(
+              postThunk({
+                variables: { PostId: props.post.id },
+                gqlQuery: gql`
+                  mutation ($PostId: ID!) {
+                    likePost(postId: $PostId) {
+                      likeCount
+                    }
+                  }
+                `,
+              })
+            );
+            setLikes(props.post.likeCount + 1);
+          }}
+        >
+          Like : {likes}
+        </div>
         <p>
           <b>{props.post.username}</b> &nbsp;
           {props.post.body}
