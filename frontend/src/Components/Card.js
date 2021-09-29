@@ -9,6 +9,8 @@ import { postThunk } from "../store/post";
 function Card(props) {
   const dispatch = useDispatch();
   const [likes, setLikes] = useState(props.post.likeCount);
+  const [comments, setComments] = useState(props.post.comments.slice(0, 2));
+  const [comment, setComment] = useState("");
   // const likes = props.post.likeCount;
   return (
     <div className="card">
@@ -42,14 +44,59 @@ function Card(props) {
           {props.post.body}
         </p>
 
-        {props.post.comments.map((comment) => {
+        {comments.map((comment) => {
           console.log(comment);
           return (
             <span key={comment.id}>
-              <b>{comment.username}</b> & nbsp;{comment.body}
+              <b>{comment.username}</b> &nbsp;{comment.body}{" "}
             </span>
           );
         })}
+      </div>
+      <div className="comment-box-container">
+        <input
+          type="text"
+          placeholder="Add a comment"
+          className="comment-box"
+          value={comment}
+          onChange={(e) => {
+            e.preventDefault();
+            setComment(e.target.value);
+          }}
+        />
+        <p
+          style={{ padding: "0px 10px 0px 0px" }}
+          onClick={() => {
+            dispatch(
+              postThunk({
+                variables: {
+                  createCommentPostId: props.post.id,
+                  createCommentBody: comment,
+                },
+                gqlQuery: gql`
+                  mutation (
+                    $createCommentPostId: ID!
+                    $createCommentBody: String!
+                  ) {
+                    createComment(
+                      postId: $createCommentPostId
+                      body: $createCommentBody
+                    ) {
+                      body
+                      username
+                      createdAt
+                    }
+                  }
+                `,
+              })
+            );
+            //TODO: use the returned comment Object from server
+            setComments(Array.from(comments.unshift(comment)));
+            console.log(comments);
+          }}
+        >
+          post
+        </p>
       </div>
     </div>
   );
