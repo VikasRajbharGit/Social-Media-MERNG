@@ -1,17 +1,17 @@
 import React from "react";
 import "./Styles/Card.css";
 import gql from "graphql-tag";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-import { postThunk } from "../store/post";
+import post, { postThunk } from "../store/post";
 
 function Card(props) {
   const dispatch = useDispatch();
   const [likes, setLikes] = useState(props.post.likeCount);
   const [comments, setComments] = useState(props.post.comments.slice(0, 2));
   const [comment, setComment] = useState("");
-  // const likes = props.post.likeCount;
+
   return (
     <div className="card">
       <img
@@ -47,9 +47,9 @@ function Card(props) {
         {comments.map((comment) => {
           console.log(comment);
           return (
-            <span key={comment.id}>
+            <p key={comment.id}>
               <b>{comment.username}</b> &nbsp;{comment.body}{" "}
-            </span>
+            </p>
           );
         })}
       </div>
@@ -90,9 +90,22 @@ function Card(props) {
                 `,
               })
             );
-            //TODO: use the returned comment Object from server
-            setComments(Array.from(comments.unshift(comment)));
+            setComment("");
+            setComments(
+              [
+                {
+                  ...comments[0],
+                  body: comment,
+                  username: props.post.username,
+                  id: new Date().getTime(),
+                },
+                ...comments,
+              ].slice(0, 2)
+            );
             console.log(comments);
+            //TODO: use the returned comment Object from server
+            // setComments(Array.from(comments.unshift(comment)));
+            // console.log(comments);
           }}
         >
           post

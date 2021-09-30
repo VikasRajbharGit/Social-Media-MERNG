@@ -13,7 +13,7 @@ function Nav() {
 
   console.log(localStorage.getItem("token").token);
   useEffect(() => {
-    console.log(auth.session > new Date());
+    console.log(auth.session > new Date().getTime());
     if (
       auth.isAuthenticated == true &&
       auth.session > new Date() &&
