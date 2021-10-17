@@ -29,15 +29,28 @@ module.exports = gql`
     email: String!
   }
   type User {
-    id: String!
+    id: String
     email: String!
-    token: String!
+    token: String
     username: String!
     createdAt: String!
+  }
+  type Follower {
+    id: String!
+    user: String!
+    follower: String!
+  }
+  type Following {
+    id: String!
+    user: String!
+    following: String!
   }
   type Query {
     getPosts: [Post]
     getPost(postId: ID!): Post
+    searchUsers(query: String!): [User]
+    # getFollowers(userId: ID!): [Follower]
+    # getFollowings(userId: ID!): [Following]
   }
   type Mutation {
     register(registerInput: RegisterInput): User!
@@ -47,6 +60,8 @@ module.exports = gql`
     createComment(postId: ID!, body: String!): Post!
     deleteComment(postId: ID!, commentId: ID!): Post!
     likePost(postId: ID!): Post!
+    follow(followingName: String!): String!
+    unfollow(followingName: String!): String!
   }
   type Subscription {
     newPost: Post!

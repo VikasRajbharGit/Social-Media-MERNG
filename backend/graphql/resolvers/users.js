@@ -23,6 +23,15 @@ const User = require("../../models/User");
 const { SECRET_KEY } = require("../../config");
 
 module.exports = {
+  Query: {
+    async searchUsers(_, { query }) {
+      const users = await User.find({
+        username: { $regex: query, $options: "i" },
+      });
+
+      return users;
+    },
+  },
   Mutation: {
     async login(_, { username, password }) {
       const { valid, errors } = validateLoginInput(username, password);
